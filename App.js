@@ -1,16 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Navigator from './routes/homeStack';
-import Scan from './src/components/Scan';
-import 'react-native-gesture-handler';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MapScreen from './screens/MapScreen';
+import ConnectWalletScreen from './screens/ConnectWalletScreen';
+import Scan from './screens/Scan';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Navigator/>
-      {/* <Scan/> */}
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Connect Wallet" component={ConnectWalletScreen}/>
+        <Stack.Screen name="Map" component={MapScreen}/>
+        <Stack.Screen name="Scan" component={Scan}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+    
   );
 }
 
