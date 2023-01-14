@@ -16,6 +16,7 @@ export default function ScannerScreen() {
 
 
   const db = SQLite.openDatabase("test7.db");
+
   const askForCameraPermission = () => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
