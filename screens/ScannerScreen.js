@@ -1,18 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import {SQLite, openDatabase} from "react-native-sqlite-storage";
+import {getLocalData, createTable} from "../helpers/sqlHelper";
+
 
 export default function ScannerScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState('Not yet scanned')
 
+  function openCB() {
+    console.log('open!')
+  }
+  function errorCB(err) {
+    console.log(err)
+  }
+  var db = openDatabase({ name: 'UserDatabase.db' }, openCB, errorCB);
   const askForCameraPermission = () => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     })()
   }
+  
+
+  // useEffect(() => {
+  //   createTable(db);
+  //   // setData(getLocalData());
+  // }, []);
 
   // Request Camera Permission
   useEffect(() => {
@@ -40,7 +56,7 @@ export default function ScannerScreen() {
         <Button title={'Allow Camera'} onPress={() => askForCameraPermission()} />
       </View>)
   }
-
+  
   // Return the View
   return (
     <View style={styles.container}>
