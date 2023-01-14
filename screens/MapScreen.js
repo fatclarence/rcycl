@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, Image } from 'react-native';
 import { Marker, Callout } from 'react-native-maps';
 
 export default function MapScreen() {
-  console.log("jh");
+  const [location, setLocation] = useState(null);
     return (
         <View style={styles.container}>
             <MapView 
@@ -18,7 +18,9 @@ export default function MapScreen() {
                 showsUserLocation = {true}
                 showsMyLocationButton={true}
                 provider = "google"
-                
+                onUserLocationChange = {(locationChangedResult) => {
+                  setLocation(locationChangedResult.nativeEvent.coordinate);
+                }}
             >
                 <Marker 
                     coordinate={{ latitude : 1.295 , longitude : 103.7764 }}
@@ -29,7 +31,7 @@ export default function MapScreen() {
                         <Image style={{ height: 100, width:100 }} source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} resizeMode="cover" />  
                       </Text>
                     
-                      <Text>Hello</Text>
+                      <Text>hello</Text>
                     </View>
                   </Callout>
                 </Marker>
