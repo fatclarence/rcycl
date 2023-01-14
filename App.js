@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator();
 
 const Tabs = createBottomTabNavigator();
 
-const db = SQLite.openDatabase("test4.db");
+const db = SQLite.openDatabase("test5.db");
 
 function AfterConnectTabs() {
   return (
