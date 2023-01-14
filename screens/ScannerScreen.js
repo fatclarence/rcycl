@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+
 // import { SQLite } from "react-native-sqlite-storage";
 import * as SQLite from "expo-sqlite";
-import {getLocalData, createTable} from "../helpers/sqlHelper";
 
 
 export default function ScannerScreen() {
@@ -12,8 +12,8 @@ export default function ScannerScreen() {
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState('Not yet scanned')
 
+
   const db = SQLite.openDatabase("test4.db");
-  
   const askForCameraPermission = () => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -46,7 +46,7 @@ export default function ScannerScreen() {
       (tx) => {
         tx.executeSql("insert into items (latitude, longitude, description) values (?, ?, ?)", [latitude, longitude, description]);
         tx.executeSql("select * from items", [], (_, { rows }) =>
-          console.log(JSON.stringify(rows))
+           console.log(JSON.stringify(rows))
         );
       },
       null
