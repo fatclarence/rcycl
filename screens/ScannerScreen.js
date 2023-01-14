@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 // import { SQLite } from "react-native-sqlite-storage";
 import * as SQLite from "expo-sqlite";
-import {getLocalData, createTable} from "../helpers/sqlHelper";
 
 
 export default function ScannerScreen() {
