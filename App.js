@@ -1,12 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Navigator from './routes/homeStack';
+import Scan from './src/components/Scan';
+import 'react-native-gesture-handler';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Navigator/>
+      {/* <Scan/> */}
     </View>
   );
 }
