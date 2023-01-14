@@ -1,6 +1,12 @@
 {
+<<<<<<< HEAD
   "expoServerPort": null,
   "packagerPort": null,
+=======
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19000,
+>>>>>>> newup
   "packagerPid": null,
   "expoServerNgrokUrl": null,
   "packagerNgrokUrl": null,
