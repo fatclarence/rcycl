@@ -1,21 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MapScreen from './screens/MapScreen';
+import ConnectWalletScreen from './screens/ConnectWalletScreen';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
       <NavigationContainer>
-        <Stack.Screen name="map" component={MapScreen}/>
+        <Stack.Navigator>
+          <Stack.Screen name="Connect Wallet" component={ConnectWalletScreen}/>
+          <Stack.Screen name="Map" component={MapScreen}/>
+        </Stack.Navigator>
       </NavigationContainer>
-      <StatusBar style="auto" />
-    </View>
   );
 }
 
