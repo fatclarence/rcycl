@@ -1,15 +1,15 @@
-import { Button, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Button, StyleSheet, Text, View } from "react-native";
+import React from "react";
 
-const ConnectWalletScreen = ({navigation}) => {
+const ConnectWalletScreen = ({ navigation }) => {
   return (
     <View>
       <Text>ConnectWalletScreen</Text>
-      <Button title="Connect" onPress={() => navigation.navigate("Home")}/>
+      <Button title="Connect" onPress={() => navigation.navigate("Home")} />
     </View>
-  )
-}
+  );
+};
 
-export default ConnectWalletScreen
+export default ConnectWalletScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
