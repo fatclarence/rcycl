@@ -4,7 +4,6 @@ import { StyleSheet, View, Text, Image } from 'react-native';
 import { Marker, Callout } from 'react-native-maps';
 
 export default function MapScreen() {
-  console.log("jh");
     return (
         <View style={styles.container}>
             <MapView 
