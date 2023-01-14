@@ -6,6 +6,7 @@ const ConnectWalletScreen = ({navigation}) => {
     <View>
       <Text>ConnectWalletScreen</Text>
       <Button title="go to map" onPress={() => navigation.navigate("Map")}/>
+      <Button title="QR code scanner" onPress={() => navigation.navigate("Scan")}/>
     </View>
   )
 }

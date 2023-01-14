@@ -5,17 +5,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MapScreen from './screens/MapScreen';
 import ConnectWalletScreen from './screens/ConnectWalletScreen';
+import ScannerScreen from './screens/ScannerScreen';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Connect Wallet" component={ConnectWalletScreen}/>
-          <Stack.Screen name="Map" component={MapScreen}/>
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Connect Wallet" component={ConnectWalletScreen}/>
+        <Stack.Screen name="Map" component={MapScreen}/>
+        <Stack.Screen name="Scan" component={ScannerScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+    
   );
 }
 
