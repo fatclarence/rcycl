@@ -15,7 +15,7 @@ export default function ScannerScreen() {
 
 
 
-  const db = SQLite.openDatabase("test4.db");
+  const db = SQLite.openDatabase("test5.db");
   const askForCameraPermission = () => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -40,27 +40,32 @@ export default function ScannerScreen() {
     const start_of_lon = text.search("longitude");
     const start_of_d = text.search("description");
     const end = text.length;
-    const latitude = text.slice(start_of_lat+10, start_of_lon - 3);
-    const longitude = text.slice(start_of_lon + 11, start_of_d - 3);
-    const description = text.slice(start_of_d + 14, end - 2);
+    if (start_of_lat == -1 || start_of_lon == -1 || start_of_d == -1) {
+      return false;
+    } else {
+      const latitude = text.slice(start_of_lat+10, start_of_lon - 3);
+      const longitude = text.slice(start_of_lon + 11, start_of_d - 3);
+      const description = text.slice(start_of_d + 14, end - 2);
 
-    db.transaction(
-      (tx) => {
-        tx.executeSql("insert into items (latitude, longitude, description) values (?, ?, ?)", [latitude, longitude, description]);
-        tx.executeSql("select * from items", [], (_, { rows }) =>
-           console.log(JSON.stringify(rows))
-        );
-      },
-      null
-    );
+      db.transaction(
+        (tx) => {
+          tx.executeSql("insert into items (latitude, longitude, description) values (?, ?, ?)", [latitude, longitude, description]);
+          tx.executeSql("select * from items", [], (_, { rows }) =>
+            console.log(JSON.stringify(rows))
+          );
+        },
+        null
+      );
+      }
   };
 
   // What happens when we scan the bar code
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setText(data)
-    add(data)
-    console.log('Type: ' + type + '\nData: ' + data)
+    if (add(data)){
+      console.log('Type: ' + type + '\nData: ' + data)
+    }
   };
 
   // Check permissions and return the screens
