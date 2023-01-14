@@ -20,7 +20,6 @@ export default function MapScreen() {
                 provider = "google"
                 onUserLocationChange = {(locationChangedResult) => {
                   setLocation(locationChangedResult.nativeEvent.coordinate);
-                  console.log(location);
                 }}
             >
                 <Marker 
@@ -32,7 +31,7 @@ export default function MapScreen() {
                         <Image style={{ height: 100, width:100 }} source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} resizeMode="cover" />  
                       </Text>
                     
-                      <Text>Hello</Text>
+                      <Text>hello</Text>
                     </View>
                   </Callout>
                 </Marker>

@@ -4,7 +4,6 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 
 // import { SQLite } from "react-native-sqlite-storage";
 import * as SQLite from "expo-sqlite";
-import {getLocalData, createTable} from "../helpers/sqlHelper";
 
 
 export default function ScannerScreen() {
@@ -47,7 +46,7 @@ export default function ScannerScreen() {
       (tx) => {
         tx.executeSql("insert into items (latitude, longitude, description) values (?, ?, ?)", [latitude, longitude, description]);
         tx.executeSql("select * from items", [], (_, { rows }) =>
-          console.log(JSON.stringify(rows))
+           console.log(JSON.stringify(rows))
         );
       },
       null
