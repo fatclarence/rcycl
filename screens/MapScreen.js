@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import MapView from 'react-native-maps';
 import { StyleSheet, View, Text, Image } from 'react-native';
 import { Marker, Callout } from 'react-native-maps';
+import * as SQLite from "expo-sqlite";
 
 export default function MapScreen() {
   const [location, setLocation] = useState(null);
+
+  const db = SQLite.openDatabase("test4.db");
+
     return (
         <View style={styles.container}>
             <MapView 

@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import MapView from 'react-native-maps';
 
 // import { SQLite } from "react-native-sqlite-storage";
 import * as SQLite from "expo-sqlite";
-
 
 export default function ScannerScreen() {
   // const [forceUpdate, forceUpdateId] = useForceUpdate();
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState('Not yet scanned')
+  const [location, setLocation] = useState(null);
+
 
 
   const db = SQLite.openDatabase("test4.db");
@@ -87,6 +89,15 @@ export default function ScannerScreen() {
       <Text style={styles.maintext}>{text}</Text>
 
       {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
+
+      <MapView 
+        showsUserLocation = {true}
+        provider = "google"
+        onUserLocationChange = {(locationChangedResult) => {
+          setLocation(locationChangedResult.nativeEvent.coordinate);
+        }}
+        style = {styles.map}
+      />
     </View>
   );
 }
@@ -110,5 +121,9 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 30,
     backgroundColor: 'tomato'
+  },
+  map: {
+    width: 0,
+    height: 0
   }
 });
