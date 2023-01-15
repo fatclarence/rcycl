@@ -9,6 +9,7 @@ import ScannerScreen from "./screens/ScannerScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProfileScreen from "./screens/ProfileScreen";
 import * as SQLite from "expo-sqlite";
+import { useWalletConnect } from "react-native-walletconnect";
 
 const Stack = createNativeStackNavigator();
 
@@ -90,7 +91,14 @@ function AfterConnectTabs() {
 }
 
 export default function Main() {
+  const { createSession, killSession, session, signTransaction } =
+    useWalletConnect();
+
+  // console.log("Now???: ", session.length);
+
   useEffect(() => {
+    // console.log("Has Wallet Start: ", session.length);
+
     db.transaction((tx) => {
       tx.executeSql(
         "create table if not exists items (id integer primary key not null, latitude text, longitude text, description text);"
@@ -102,12 +110,18 @@ export default function Main() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Connect Wallet" component={ConnectWalletScreen} />
-        <Stack.Screen
-          name="Home"
-          component={AfterConnectTabs}
-          options={{ headerShown: false }}
-        />
+        {!session.length ? (
+          <Stack.Screen
+            name="Connect Wallet"
+            component={ConnectWalletScreen}
+          ></Stack.Screen>
+        ) : (
+          <Stack.Screen
+            name="Home"
+            component={AfterConnectTabs}
+            options={{ headerShown: false }}
+          />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
