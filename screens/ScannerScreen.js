@@ -31,8 +31,8 @@ export default function ScannerScreen() {
    
    /** calculates the distance between two locations in KM < 0.01km */
    const distance = (lat1, lng1, lat2, lng2) => {
-      console.log(lat2);
-      console.log(lng2);
+      //console.log(lat2);
+      //console.log(lng2);
       function degToRad(deg) {
         return deg * (Math.PI / 180.0);
       }
@@ -52,7 +52,7 @@ export default function ScannerScreen() {
    
        const dist = earthRadius * c;
    
-       return dist < 0.01; // output distance, in MILES
+       return dist < 0.03; // output distance, in MILES
    }
 
   // read text from database
