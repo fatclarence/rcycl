@@ -110,19 +110,19 @@ export default function Main() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {!session.length ? (
+        {/* {!session.length ? ( */}
           <Stack.Screen
             name="Connect Wallet"
             component={ConnectWalletScreen}
             options={{ headerShown: false }}
           ></Stack.Screen>
-        ) : (
+        {/* ) : ( */}
           <Stack.Screen
             name="Home"
             component={AfterConnectTabs}
             options={{ headerShown: false }}
           />
-        )}
+        {/* // )} */}
       </Stack.Navigator>
     </NavigationContainer>
   );

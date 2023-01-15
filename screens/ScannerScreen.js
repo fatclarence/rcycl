@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import MapView from 'react-native-maps';
+import { firebase } from '../firebase.config';
 
 // import { SQLite } from "react-native-sqlite-storage";
-import * as SQLite from "expo-sqlite";
+// import * as SQLite from "expo-sqlite";
 
 export default function ScannerScreen() {
   // const [forceUpdate, forceUpdateId] = useForceUpdate();
@@ -13,9 +14,8 @@ export default function ScannerScreen() {
   const [text, setText] = useState('Not yet scanned')
   const [location, setLocation] = useState(null);
 
+  const [exists, setExists] = useState(null);
 
-
-  const db = SQLite.openDatabase("test7.db");
 
   const askForCameraPermission = () => {
     (async () => {
@@ -28,8 +28,34 @@ export default function ScannerScreen() {
   useEffect(() => {
     askForCameraPermission();
   }, []);
+   
+   /** calculates the distance between two locations in KM < 0.01km */
+   const distance = (lat1, lng1, lat2, lng2) => {
+      console.log(lat2);
+      console.log(lng2);
+      function degToRad(deg) {
+        return deg * (Math.PI / 180.0);
+      }
+   
+       const earthRadius = 6371; // in miles, change to 6371 for kilometer output
+   
+       const dLat = degToRad(lat2-lat1);
+       const dLng = degToRad(lng2-lng1);
+   
+       const sindLng = Math.sin(dLng / 2);
+       const sindLat = Math.sin(dLat / 2);
+   
+       const a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+           * Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2));
+   
+       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+   
+       const dist = earthRadius * c;
+   
+       return dist < 0.01; // output distance, in MILES
+   }
 
-  // add text to database
+  // read text from database
   const add = (text) => {
     console.log("adding");
     // is text empty?
@@ -37,36 +63,31 @@ export default function ScannerScreen() {
       return false;
     }
 
-    const start_of_lat = text.search("latitude");
-    const start_of_lon = text.search("longitude");
-    const start_of_d = text.search("description");
-    const end = text.length;
-    if (start_of_lat == -1 || start_of_lon == -1 || start_of_d == -1) {
-      return false;
-    } else {
-      const latitude = text.slice(start_of_lat+10, start_of_lon - 3);
-      const longitude = text.slice(start_of_lon + 11, start_of_d - 3);
-      const description = text.slice(start_of_d + 14, end - 2);
-
-      db.transaction(
-        (tx) => {
-          tx.executeSql("insert into items (latitude, longitude, description) values (?, ?, ?)", [latitude, longitude, description]);
-          tx.executeSql("select * from items", [], (_, { rows }) =>
-            console.log(JSON.stringify(rows))
-          );
-        },
-        null
-      );
+    const userDocRef = firebase.firestore().collection('bins').doc(text);
+    userDocRef.get().then((doc) => {
+      if (!doc.exists) {
+        setExists("Invalid QR code")
+        console.log('No such document exists!'); 
+      } else {
+        const data = doc.data();
+        setExists(data.description);
+        const lat = data.location.latitude;
+        const lon = data.location.longitude;
+        const near = distance(lat, lon, location.latitude, location.longitude);
+        console.log(near)
+        console.log('exists');
+        console.log('Document data:', data);
       }
+  });
   };
 
   // What happens when we scan the bar code
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setText(data)
-    if (add(data)){
-      console.log('Type: ' + type + '\nData: ' + data)
-    }
+    add(data)
+    console.log('Type: ' + type + '\nData: ' + data)
+    
   };
 
   // Check permissions and return the screens
@@ -87,15 +108,6 @@ export default function ScannerScreen() {
   // Return the View
   return (
     <View style={styles.container}>
-      <View style={styles.barcodebox}>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{ height: 400, width: 400 }} />
-      </View>
-      <Text style={styles.maintext}>{text}</Text>
-
-      {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
-
       <MapView 
         showsUserLocation = {true}
         provider = "google"
@@ -104,6 +116,15 @@ export default function ScannerScreen() {
         }}
         style = {styles.map}
       />
+      <View style={styles.barcodebox}>
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={{ height: 400, width: 400 }} />
+      </View>
+
+      <Text style={styles.maintext}>{exists}</Text>
+
+      {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
     </View>
   );
 }

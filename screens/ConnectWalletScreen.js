@@ -40,7 +40,7 @@ const ConnectWalletScreen = () => {
 
       {/* <Button title="Connect" onPress={() => navigation.navigate("Home")} /> */}
     </View>
-  );
-};
+  )
+}
 
 export default ConnectWalletScreen;
