@@ -9,9 +9,11 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@ethersproject/shims": "^5.7.0",
     "@react-navigation/bottom-tabs": "^6.5.3",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
+    "ethers": "^5.7.2",
     "expo": "^47.0.13",
     "expo-asset": "^8.7.0",
     "expo-barcode-scanner": "~12.1.0",
