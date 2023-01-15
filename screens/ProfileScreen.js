@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { useWalletConnect } from "react-native-walletconnect";
-import { withOrientation } from "react-navigation";
 
 const ProfileScreen = () => {
   const { killSession } = useWalletConnect();
@@ -9,7 +8,7 @@ const ProfileScreen = () => {
     <View style={styles.container}>
       {/* <Text>ProfileScreen</Text> */}
       <TouchableOpacity title="Kill Session" style={styles.button} onPress={() => killSession()}>
-        <Text style={styles.buttonText}>Kill Current Session</Text>
+        <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
 
       <Image source={require('../icons/icon_transparent.png')} style={styles.image}/>
