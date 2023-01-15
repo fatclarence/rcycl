@@ -18,31 +18,6 @@ const ProfileScreen = () => {
   const { createSession, killSession, session, signTransaction } =
     useWalletConnect();
 
-  const fetchBalance = async () => {
-    let tempProvider = new ethers.providers.JsonRpcProvider(
-      "https://sepolia.gateway.tenderly.co/4ueZyXsGXJJ55Yyoyz3JWT"
-    );
-    let tempSigner = tempProvider.getSigner();
-
-    let contract = new ethers.Contract(
-      "0x4db8022Ae2BC5A8fB68Ca848bA6Ae184BbF5b476",
-      gnrToken,
-      tempSigner
-    );
-
-    // const defaultAccount = JSON.stringify(session[0].accounts[0]);
-    const defaultAccount = "0x5601A78F9F2037D996c5a51640628FA9645A28c9";
-
-    let balanceBigN = await contract.balanceOf(defaultAccount);
-    let balanceNumber = balanceBigN.toNumber();
-
-    let decimals = await contract.decimals();
-
-    let tokenBalance = balanceNumber / Math.pow(10, decimals);
-
-    console.log("HELLLOOOOO: ", tokenBalance);
-  };
-
   return (
     <View style={styles.container}>
       {/* <Text>ProfileScreen</Text> */}
