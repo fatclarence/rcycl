@@ -114,6 +114,7 @@ export default function Main() {
           <Stack.Screen
             name="Connect Wallet"
             component={ConnectWalletScreen}
+            options={{ headerShown: false }}
           ></Stack.Screen>
         {/* ) : ( */}
           <Stack.Screen
