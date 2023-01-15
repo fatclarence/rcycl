@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import MapView from 'react-native-maps';
 import { firebase } from '../firebase.config';
@@ -74,8 +74,11 @@ export default function ScannerScreen() {
         const lat = data.location.latitude;
         const lon = data.location.longitude;
         const near = distance(lat, lon, location.latitude, location.longitude);
-        console.log(near)
-        console.log('exists');
+        if (near) {
+          Alert.alert("Scanning success! GNR will be credited within 1 working day");
+        } else {
+          Alert.alert("Current Location not within 30 metres of bin!");
+        }
         console.log('Document data:', data);
       }
   });
