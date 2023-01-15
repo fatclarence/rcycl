@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { Marker, Callout } from 'react-native-maps';
 import { firebase } from '../firebase.config';
 
@@ -22,9 +22,6 @@ export default function MapScreen() {
       setLoaded(bins.length != 0);
     });
   }, []);
-
-  console.log(loaded);
-  console.log(bins);
 
   function mapBins() {
     return (bins.map((bin) => (
@@ -61,13 +58,19 @@ export default function MapScreen() {
       </View>
     );
   } else {
-    return (<Text>Loading...</Text>)
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#0782F9" />
+      </View>
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignContent: 'center',
+    justifyContent: 'center'
   },
   map: {
     width: '100%',
